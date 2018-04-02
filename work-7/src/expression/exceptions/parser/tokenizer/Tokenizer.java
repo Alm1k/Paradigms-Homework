@@ -11,7 +11,7 @@ public class Tokenizer {
     private final String expression;
     private static final Map<String, Token> IDENTIFIERS = new HashMap<>();
     private Token token;
-    private static Set<Token> operations = EnumSet.of(Token.ADD, Token.SUB, Token.MUL, Token.DIV);
+    private static final Set<Token> operations = EnumSet.of(Token.ADD, Token.SUB, Token.MUL, Token.DIV);
 
     static {
         IDENTIFIERS.put("log10", Token.LOG);
@@ -54,7 +54,7 @@ public class Tokenizer {
         try {
             return Integer.parseInt(getContent());
         } catch (NumberFormatException e) {
-            throw new IllegalConstantException(getContent());
+            throw new IllegalConstantException(getContent(), getExpression(), begin);
         }
     }
 
@@ -64,9 +64,9 @@ public class Tokenizer {
         }
     }
 
-    private void checkForOperation() throws MissingOperationExcepton {
+    private void checkForOperation() throws MissingOperationException {
         if (token == Token.BRACE_CLS || token == Token.VARIABLE || token == Token.CONST) {
-            throw new MissingOperationExcepton(expression, begin);
+            throw new MissingOperationException(expression, begin);
         }
     }
 
@@ -119,7 +119,7 @@ public class Tokenizer {
                         throw new MissingOperandException(expression, begin);
                     }
                     if (--balance < 0) {
-                        throw new OddClosingException(expression, begin);
+                        throw new NoOpeningParenthesisException(expression, begin);
                     }
                     token = Token.BRACE_CLS;
                     break;
@@ -131,7 +131,7 @@ public class Tokenizer {
                     } else {
                         parseIdentifier();
                         if (!IDENTIFIERS.containsKey(getContent())) {
-                            throw new IllegalIdentifierException(getContent());
+                            throw new IllegalIdentifierException(getContent(), getExpression(), begin);
                         }
                         token = IDENTIFIERS.get(getContent());
                     }
@@ -144,7 +144,7 @@ public class Tokenizer {
 
     private void parseIdentifier() throws IllegalIdentifierException {
         if (!Character.isLetter(expression.charAt(begin))) {
-            throw new IllegalIdentifierException(begin);
+            throw new IllegalIdentifierException(getExpression(), begin);
         }
         while (end < expression.length() && isPartOfIdentifier(expression.charAt(end))) {
             ++end;

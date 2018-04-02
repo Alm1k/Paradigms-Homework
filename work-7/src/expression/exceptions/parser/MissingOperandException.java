@@ -1,7 +1,7 @@
 package expression.exceptions.parser;
 
 public class MissingOperandException extends ParseException {
-    public MissingOperandException(String expression, int begin) {
-        super("Missing operand before position: " + begin + "\n" + expression);
+    public MissingOperandException(String expression, int index) {
+        super("Missing operand", expression, index);
     }
 }

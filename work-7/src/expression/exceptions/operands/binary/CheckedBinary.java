@@ -4,9 +4,10 @@ import expression.exceptions.TripleExpression;
 import expression.exceptions.operands.EvalException;
 
 public abstract class CheckedBinary implements TripleExpression {
-    private TripleExpression first, second;
+    private final TripleExpression first;
+    private final TripleExpression second;
 
-    protected CheckedBinary(TripleExpression first, TripleExpression second) {
+    CheckedBinary(TripleExpression first, TripleExpression second) {
         this.first = first;
         this.second = second;
     }

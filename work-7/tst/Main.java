@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         ExpressionParser parser = new ExpressionParser();
         try {
-            String testStr = "pow10 x * y";
+            String testStr = "log10";
 
             TripleExpression expression = parser.parse(testStr);
             System.err.println(expression.evaluate(10, 0, 0));

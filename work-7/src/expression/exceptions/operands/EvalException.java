@@ -1,7 +1,7 @@
 package expression.exceptions.operands;
 
 public class EvalException extends Exception {
-    public EvalException(String message) {
+    protected EvalException(String message) {
         super(message);
     }
 }

@@ -3,7 +3,7 @@ package expression.exceptions.operands.unary;
 import expression.exceptions.TripleExpression;
 
 public class Const implements TripleExpression {
-    private int value;
+    private final int value;
 
     public Const(int value) {
         this.value = value;

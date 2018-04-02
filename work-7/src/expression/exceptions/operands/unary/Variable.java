@@ -4,7 +4,7 @@ import expression.exceptions.TripleExpression;
 import expression.exceptions.operands.EvalException;
 
 public class Variable implements TripleExpression {
-    private String var;
+    private final String var;
 
     public Variable(String var) {
         this.var = var;
@@ -25,7 +25,7 @@ public class Variable implements TripleExpression {
     }
 
     private class WrongVariableException extends EvalException {
-        public WrongVariableException(String varName) {
+        WrongVariableException(String varName) {
             super("Wrong name `" + varName + "` variable");
         }
     }

@@ -1,11 +1,11 @@
 package expression.exceptions.parser;
 
 public class IllegalIdentifierException extends ParseException {
-    public IllegalIdentifierException(int begin) {
-        super("Identifier need starts with letter\n" + "Exception at: " + begin);
+    public IllegalIdentifierException(String expression, int index) {
+        super("Identifier need starts with letter", expression, index);
     }
 
-    public IllegalIdentifierException(String content) {
-        super("Wrong identifier name: " + content);
+    public IllegalIdentifierException(String content, String expression, int index) {
+        super(String.format("Wrong identifier name \"%s\"", content), expression, index);
     }
 }

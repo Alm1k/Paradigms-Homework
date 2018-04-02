@@ -51,7 +51,7 @@ public class ExpressionParser implements Parser {
     }
 
     private TripleExpression parseLower() throws ParseException {
-        TripleExpression result = null;
+        TripleExpression result;
         switch (tokenizer.getNextToken()) {
             case VARIABLE:
                 result = new Variable(tokenizer.getContent());
@@ -73,12 +73,12 @@ public class ExpressionParser implements Parser {
             case BRACE_OPN:
                 result = parseAddSub();
                 if (tokenizer.getToken() != Token.BRACE_CLS) {
-                    throw new MissingClosingException(tokenizer.getExpression(), tokenizer.getPosition());
+                    throw new NoClosingParenthesisException(tokenizer.getExpression(), tokenizer.getPosition());
                 }
                 tokenizer.getNextToken();
                 break;
             default:
-                throw new ParseException("Incorrect expression" + "\n" + tokenizer.getExpression());
+                throw new ParseException("Incorrect expression", tokenizer.getExpression());
         }
         return result;
     }

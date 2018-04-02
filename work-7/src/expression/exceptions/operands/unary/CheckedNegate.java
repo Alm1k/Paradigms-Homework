@@ -10,14 +10,14 @@ public class CheckedNegate extends CheckedUnary {
     }
 
     @Override
-    void check(int result) throws EvalException {
-        if (result == Integer.MIN_VALUE) {
+    void check(int value) throws EvalException {
+        if (value == Integer.MIN_VALUE) {
             throw new OverflowException();
         }
     }
 
     @Override
-    int apply(int result) {
-        return -result;
+    int apply(int value) {
+        return -value;
     }
 }

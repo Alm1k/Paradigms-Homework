@@ -4,7 +4,7 @@ import expression.exceptions.TripleExpression;
 import expression.exceptions.operands.EvalException;
 
 public abstract class CheckedUnary implements TripleExpression {
-    private TripleExpression expression;
+    private final TripleExpression expression;
 
     CheckedUnary(TripleExpression expression) {
         this.expression = expression;
@@ -17,7 +17,7 @@ public abstract class CheckedUnary implements TripleExpression {
         return apply(result);
     }
 
-    abstract void check(int result) throws EvalException;
+    abstract void check(int value) throws EvalException;
 
-    abstract int apply(int result);
+    abstract int apply(int value);
 }

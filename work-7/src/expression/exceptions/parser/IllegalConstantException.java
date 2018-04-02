@@ -1,7 +1,7 @@
 package expression.exceptions.parser;
 
 public class IllegalConstantException extends ParseException {
-    public IllegalConstantException(String content) {
-        super("Can't create const: " + content);
+    public IllegalConstantException(String content, String expression, int index) {
+        super("Can't create const with name " + content, expression, index);
     }
 }

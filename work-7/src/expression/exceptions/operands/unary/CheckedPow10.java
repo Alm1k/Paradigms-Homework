@@ -11,17 +11,17 @@ public class CheckedPow10 extends CheckedUnary {
     }
 
     @Override
-    void check(int result) throws EvalException {
-        if (result >= 10) {
+    void check(int value) throws EvalException {
+        if (value >= 10) {
             throw new OverflowException();
         }
-        if (result < 0) {
+        if (value < 0) {
             throw new IllegalOperationException("Powering is negative");
         }
     }
 
     @Override
-    int apply(int result) {
-        return (int) Math.pow(10, result);
+    int apply(int value) {
+        return (int) Math.pow(10, value);
     }
 }

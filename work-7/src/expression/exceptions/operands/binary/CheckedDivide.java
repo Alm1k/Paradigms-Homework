@@ -13,7 +13,7 @@ public class CheckedDivide extends CheckedBinary {
     @Override
     protected void check(int first, int second) throws EvalException {
         if (second == 0) {
-            throw new IllegalOperationException("division by zero");
+            throw new IllegalOperationException("Division by zero");
         }
         if (first == Integer.MIN_VALUE && second == -1) {
             throw new OverflowException();
