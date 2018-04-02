@@ -1,4 +1,4 @@
-package expression;
+package lib;
 
 import base.TestCounter;
 
@@ -20,18 +20,6 @@ public abstract strictfp class BaseTest {
         checkAssert(getClass());
     }
 
-    public void assertTrue(final String message, final boolean condition) {
-        assert condition : message;
-    }
-
-    public void assertEquals(final String message, final int actual, final int expected) {
-        assertTrue(String.format("%s: Expected %d, found %d", message, expected, actual), actual == expected);
-    }
-
-    public void assertEquals(final String message, final Object actual, final Object expected) {
-        assertTrue(String.format("%s: Expected \"%s\", found \"%s\"", message, expected, actual), actual != null && actual.equals(expected) || expected == null);
-    }
-
     public static String repeat(final String s, final int n) {
         return Stream.generate(() -> s).limit(n).collect(Collectors.joining());
     }
@@ -45,15 +33,6 @@ public abstract strictfp class BaseTest {
         return variants.get(random.nextInt(variants.size()));
     }
 
-    public <T> T random(final List<T> variants) {
-        return variants.get(random.nextInt(variants.size()));
-    }
-
-    @SafeVarargs
-    public final <T> T random(final T... variants) {
-        return random(Arrays.asList(variants));
-    }
-
     @SafeVarargs
     public static <T> List<T> list(final T... items) {
         return new ArrayList<>(Arrays.asList(items));
@@ -63,6 +42,31 @@ public abstract strictfp class BaseTest {
         for (int i = -d; i <= d; i++) {
             values.add(c + i);
         }
+    }
+
+    public static <T> Op<T> op(final String name, final T f) {
+        return new Op<>(name, f);
+    }
+
+    public void assertTrue(final String message, final boolean condition) {
+        assert condition : message;
+    }
+
+    public void assertEquals(final String message, final int actual, final int expected) {
+        assertTrue(String.format("%s: Expected %d, found %d", message, expected, actual), actual == expected);
+    }
+
+    public void assertEquals(final String message, final Object actual, final Object expected) {
+        assertTrue(String.format("%s: Expected \"%s\", found \"%s\"", message, expected, actual), actual != null && actual.equals(expected) || expected == null);
+    }
+
+    public <T> T random(final List<T> variants) {
+        return variants.get(random.nextInt(variants.size()));
+    }
+
+    @SafeVarargs
+    public final <T> T random(final T... variants) {
+        return random(Arrays.asList(variants));
     }
 
     public int randomInt(final int n) {
@@ -76,10 +80,6 @@ public abstract strictfp class BaseTest {
 
     protected abstract void test();
 
-    public static <T> Op<T> op(final String name, final T f) {
-        return new Op<>(name, f);
-    }
-
     public void assertEquals(final String message, final double precision, final double actual, final double expected) {
         assertTrue(
                 String.format("%s: Expected %.12f, found %.12f", message, expected, actual),
@@ -90,6 +90,12 @@ public abstract strictfp class BaseTest {
         );
     }
 
+    private void checkAssert(final Class<?> c) {
+        if (!c.desiredAssertionStatus()) {
+            throw new AssertionError("You should enable assertions by running 'java -ea " + c.getName() + "'");
+        }
+    }
+
     public static final class Op<T> {
         public final String name;
         public final T f;
@@ -97,12 +103,6 @@ public abstract strictfp class BaseTest {
         private Op(final String name, final T f) {
             this.name = name;
             this.f = f;
-        }
-    }
-
-    private void checkAssert(final Class<?> c) {
-        if (!c.desiredAssertionStatus()) {
-            throw new AssertionError("You should enable assertions by running 'java -ea " + c.getName() + "'");
         }
     }
 }

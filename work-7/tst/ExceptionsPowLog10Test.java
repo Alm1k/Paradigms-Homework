@@ -1,5 +1,3 @@
-package expression.exceptions;
-
 import java.util.Arrays;
 
 /**

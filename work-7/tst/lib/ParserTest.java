@@ -1,7 +1,5 @@
-package expression.parser;
+package lib;
 
-import expression.BaseTest;
-import expression.CommonExpression;
 import expression.exceptions.TripleExpression;
 import expression.exceptions.parser.ExpressionParser;
 
@@ -17,14 +15,14 @@ import java.util.function.LongUnaryOperator;
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public class ParserTest extends BaseTest {
+    public static final Reason DBZ = new Reason("Division by zero");
     private final static int D = 5;
-
     private final static List<Integer> TEST_VALUES = new ArrayList<>();
+
     static {
         addRange(TEST_VALUES, D, D);
         addRange(TEST_VALUES, D, -D);
     }
-
 
     protected final List<Op<LongUnaryOperator>> unary = new ArrayList<>();
     protected final List<List<Op<LongBinaryOperator>>> levels = new ArrayList<>();
@@ -67,6 +65,14 @@ public class ParserTest extends BaseTest {
         new ParserTest().run();
     }
 
+    private static Test p(final Test t) {
+        return new Test("(" + t.expr + ")", t.answer);
+    }
+
+    public static long error(final Reason reason) {
+        throw new ExpException(reason);
+    }
+
     @Override
     protected void test() {
         for (final Op<TExpression> test : tests) {
@@ -92,8 +98,6 @@ public class ParserTest extends BaseTest {
             return Either.left(e.reason);
         }
     }
-
-    public static final Reason DBZ = new Reason("Division by zero");
 
     protected void testRandom(final int seq, final int n, final BiFunction<int[], Integer, Test> f) {
         System.out.println("Testing random tests #" + seq);
@@ -173,10 +177,6 @@ public class ParserTest extends BaseTest {
         }
     }
 
-    private static Test p(final Test t) {
-        return new Test("(" + t.expr + ")", t.answer);
-    }
-
     private Test binary(final List<Op<LongBinaryOperator>> ops, final Test t1, final Test t2) {
         final Op<LongBinaryOperator> op = random(ops);
         return new Test(
@@ -206,6 +206,27 @@ public class ParserTest extends BaseTest {
         return Either.right((int) value);
     }
 
+    protected TripleExpression parse(final String expression, final boolean reparse) {
+        try {
+            final ExpressionParser parser = new ExpressionParser();
+            if (reparse) {
+                counter.nextTest();
+                parser.parse(expression);
+                counter.passed();
+            }
+            counter.nextTest();
+            final CommonExpression result = (CommonExpression) parser.parse(expression);
+            counter.passed();
+            return result;
+        } catch (final Exception e) {
+            throw new AssertionError("Parser failed", e);
+        }
+    }
+
+    public interface TExpression {
+        long evaluate(long x, long y, long z);
+    }
+
     protected static class Test {
         final String expr;
         final Either<Reason, Integer> answer;
@@ -224,27 +245,6 @@ public class ParserTest extends BaseTest {
         }
     }
 
-    public static long error(final Reason reason) {
-        throw new ExpException(reason);
-    }
-
-    protected TripleExpression parse(final String expression, final boolean reparse) {
-        try {
-            final ExpressionParser parser = new ExpressionParser();
-            if (reparse) {
-                counter.nextTest();
-                parser.parse(expression);
-                counter.passed();
-            }
-            counter.nextTest();
-            final CommonExpression result = (CommonExpression) parser.parse(expression);
-            counter.passed();
-            return result;
-        } catch (final Exception e) {
-            throw new AssertionError("Parser failed", e);
-        }
-    }
-
     public static class ExpException extends RuntimeException {
         private final Reason reason;
 
@@ -252,9 +252,5 @@ public class ParserTest extends BaseTest {
             super(reason.description);
             this.reason = reason;
         }
-    }
-
-    public interface TExpression {
-        long evaluate(long x, long y, long z);
     }
 }

@@ -6,6 +6,6 @@ public class ParseException extends Exception {
     }
 
     public ParseException(String message, String expression) {
-        super(String.format("%s for \"%s\")", message, expression));
+        super(String.format("%s for \"%s\"", message, expression));
     }
 }

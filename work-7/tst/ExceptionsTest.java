@@ -1,5 +1,4 @@
-package expression.exceptions;
-
+import expression.exceptions.TripleExpression;
 import expression.exceptions.operands.binary.CheckedAdd;
 import expression.exceptions.operands.binary.CheckedDivide;
 import expression.exceptions.operands.binary.CheckedMultiply;
@@ -8,8 +7,8 @@ import expression.exceptions.operands.unary.CheckedNegate;
 import expression.exceptions.operands.unary.Variable;
 import expression.exceptions.parser.ExpressionParser;
 import expression.exceptions.parser.Parser;
-import expression.parser.Either;
-import expression.parser.ParserTest;
+import lib.Either;
+import lib.ParserTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +20,11 @@ import java.util.function.LongBinaryOperator;
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public class ExceptionsTest extends ParserTest {
-    private final static int D = 5;
-    private final static List<Integer> OVERFLOW_VALUES = new ArrayList<>();
-    private final char[] CHARS = "AZ+-*%()[]<>".toCharArray();
-
     public static final Variable VX = new Variable("x");
     public static final Variable VY = new Variable("y");
     public static final Reason OVERFLOW = new Reason("Overflow");
+    private final static int D = 5;
+    private final static List<Integer> OVERFLOW_VALUES = new ArrayList<>();
 
     static {
         addRange(OVERFLOW_VALUES, D, Integer.MIN_VALUE + D);
@@ -54,6 +51,7 @@ public class ExceptionsTest extends ParserTest {
             op("Constant overflow 1", Integer.MIN_VALUE - 1L + ""),
             op("Constant overflow 2", Integer.MAX_VALUE + 1L + "")
     ));
+    private final char[] CHARS = "AZ+-*%()[]<>".toCharArray();
 
     public static void main(final String[] args) {
         new ExceptionsTest().run();
