@@ -5,7 +5,7 @@ import expressions.EvaluateException;
 import operations.Operations;
 
 public class Negate<T> extends Unary<T> {
-    Negate(TripleExpression<T> expression, Operations<T> operations) {
+    public Negate(TripleExpression<T> expression, Operations<T> operations) {
         super(expression, operations);
     }
 
