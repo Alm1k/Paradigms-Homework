@@ -1,12 +1,12 @@
-import expression.exceptions.TripleExpression;
-import expression.exceptions.operands.binary.CheckedAdd;
-import expression.exceptions.operands.binary.CheckedDivide;
-import expression.exceptions.operands.binary.CheckedMultiply;
-import expression.exceptions.operands.binary.CheckedSubtract;
-import expression.exceptions.operands.unary.CheckedNegate;
-import expression.exceptions.operands.unary.Variable;
-import expression.exceptions.parser.ExpressionParser;
-import expression.exceptions.parser.Parser;
+import expressions.TripleExpression;
+import expressions.binary.CheckedAdd;
+import expressions.binary.CheckedDivide;
+import expressions.binary.CheckedMultiply;
+import expressions.binary.CheckedSubtract;
+import expressions.unary.CheckedNegate;
+import expressions.unary.Variable;
+import parser.ExpressionParser;
+import parser.Parser;
 import lib.Either;
 import lib.ParserTest;
 

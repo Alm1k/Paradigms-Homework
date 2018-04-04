@@ -1,5 +1,5 @@
-import expression.exceptions.TripleExpression;
-import expression.exceptions.parser.ExpressionParser;
+import expressions.TripleExpression;
+import parser.ExpressionParser;
 
 public class Main {
     public static void main(String[] args) {

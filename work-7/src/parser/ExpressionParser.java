@@ -1,39 +1,35 @@
 package parser;
 
-
 import expressions.TripleExpression;
-import expressions.binary.*;
+import expressions.binary.CheckedAdd;
+import expressions.binary.CheckedDivide;
+import expressions.binary.CheckedMultiply;
+import expressions.binary.CheckedSubtract;
 import expressions.unary.*;
-import operations.Operations;
-import parser.exceptions.MissingOperandException;
+import parser.exceptions.MissingArgumentException;
 import parser.exceptions.NoClosingParenthesisException;
 import parser.exceptions.ParseException;
 import parser.tokenizer.Token;
 import parser.tokenizer.Tokenizer;
 
-public class ExpressionParser<T> implements Parser {
+public class ExpressionParser implements Parser {
     private Tokenizer tokenizer;
-    private final Operations<T> operations;
-
-    public ExpressionParser(Operations<T> operations) {
-        this.operations = operations;
-    }
 
     @Override
-    public TripleExpression<T> parse(String expression) throws ParseException {
+    public TripleExpression parse(String expression) throws ParseException {
         tokenizer = new Tokenizer(expression);
         return parseAddSub();
     }
 
-    private TripleExpression<T> parseAddSub() throws ParseException {
-        TripleExpression<T> result = parseMulDiv();
+    private TripleExpression parseAddSub() throws ParseException {
+        TripleExpression result = parseMulDiv();
         while (true) {
             switch (tokenizer.getToken()) {
                 case ADD:
-                    result = new Add<>(result, parseMulDiv(), operations);
+                    result = new CheckedAdd(result, parseMulDiv());
                     break;
                 case SUB:
-                    result = new Subtract<>(result, parseMulDiv(), operations);
+                    result = new CheckedSubtract(result, parseMulDiv());
                     break;
                 default:
                     return result;
@@ -41,15 +37,15 @@ public class ExpressionParser<T> implements Parser {
         }
     }
 
-    private TripleExpression<T> parseMulDiv() throws ParseException {
-        TripleExpression<T> result = parseLower();
+    private TripleExpression parseMulDiv() throws ParseException {
+        TripleExpression result = parseLower();
         while (true) {
             switch (tokenizer.getToken()) {
                 case MUL:
-                    result = new Multiply<>(result, parseLower(), operations);
+                    result = new CheckedMultiply(result, parseLower());
                     break;
                 case DIV:
-                    result = new Divide<>(result, parseLower(), operations);
+                    result = new CheckedDivide(result, parseLower());
                     break;
                 default:
                     return result;
@@ -57,19 +53,25 @@ public class ExpressionParser<T> implements Parser {
         }
     }
 
-    private TripleExpression<T> parseLower() throws ParseException {
-        TripleExpression<T> result;
+    private TripleExpression parseLower() throws ParseException {
+        TripleExpression result;
         switch (tokenizer.getNextToken()) {
             case VARIABLE:
-                result = new Variable<>(tokenizer.getContent());
+                result = new Variable(tokenizer.getContent());
                 tokenizer.getNextToken();
                 break;
             case CONST:
-                result = new Const<>(operations.parseNumber(tokenizer.getContent()));
+                result = new Const(tokenizer.getNumber());
                 tokenizer.getNextToken();
                 break;
             case INVERSE:
-                result = new Negate<>(parseLower(), operations);
+                result = new CheckedNegate(parseLower());
+                break;
+            case LOG:
+                result = new CheckedLog10(parseLower());
+                break;
+            case POW:
+                result = new CheckedPow10(parseLower());
                 break;
             case BRACE_OPN:
                 result = parseAddSub();
@@ -79,7 +81,7 @@ public class ExpressionParser<T> implements Parser {
                 tokenizer.getNextToken();
                 break;
             default:
-                throw new MissingOperandException(tokenizer.getExpression(), tokenizer.getPosition());
+                throw new MissingArgumentException(tokenizer.getExpression(), tokenizer.getPosition());
         }
         return result;
     }

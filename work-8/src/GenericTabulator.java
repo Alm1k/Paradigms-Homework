@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GenericTabulator implements Tabulator {
-    private static Map<String, Operations<?>> operationsMap = new HashMap<>();
+    private static final Map<String, Operations<?>> operationsMap = new HashMap<>();
 
     static {
         operationsMap.put("i", new IntegerOperations());

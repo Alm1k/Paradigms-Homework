@@ -1,7 +1,7 @@
 package lib;
 
-import expression.exceptions.TripleExpression;
-import expression.exceptions.parser.ExpressionParser;
+import expressions.TripleExpression;
+import parser.ExpressionParser;
 
 import java.util.ArrayList;
 import java.util.List;

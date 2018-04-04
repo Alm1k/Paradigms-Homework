@@ -6,7 +6,7 @@ import operations.Operations;
 
 public abstract class Unary<T> implements TripleExpression<T> {
     private final TripleExpression<T> expression;
-    protected final Operations<T> operations;
+    final Operations<T> operations;
 
     Unary(TripleExpression<T> expression, Operations<T> operations) {
         this.expression = expression;

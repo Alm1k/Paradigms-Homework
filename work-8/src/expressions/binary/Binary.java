@@ -8,7 +8,7 @@ import expressions.EvaluateException;
 public abstract class Binary<T> implements TripleExpression<T> {
     private final TripleExpression<T> first;
     private final TripleExpression<T> second;
-    protected final Operations<T> operations;
+    final Operations<T> operations;
 
     Binary(TripleExpression<T> first, TripleExpression<T> second, Operations<T> operations) {
         this.first = first;

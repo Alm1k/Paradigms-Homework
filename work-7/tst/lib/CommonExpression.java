@@ -1,6 +1,6 @@
 package lib;
 
-import expression.exceptions.TripleExpression;
+import expressions.TripleExpression;
 
 interface CommonExpression extends TripleExpression {
 }

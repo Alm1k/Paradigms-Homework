@@ -1,7 +1,6 @@
 package operations;
 
 import operations.exceptions.IllegalOperationException;
-import operations.exceptions.OverflowException;
 
 import java.math.BigInteger;
 
@@ -12,17 +11,17 @@ public class BigIntegerOperations implements Operations<BigInteger> {
     }
 
     @Override
-    public BigInteger add(BigInteger first, BigInteger second) throws OverflowException {
+    public BigInteger add(BigInteger first, BigInteger second) {
         return first.add(second);
     }
 
     @Override
-    public BigInteger subtract(BigInteger first, BigInteger second) throws OverflowException {
+    public BigInteger subtract(BigInteger first, BigInteger second) {
         return first.subtract(second);
     }
 
     @Override
-    public BigInteger multiply(BigInteger first, BigInteger second) throws OverflowException {
+    public BigInteger multiply(BigInteger first, BigInteger second) {
         return first.multiply(second);
     }
 
@@ -35,7 +34,7 @@ public class BigIntegerOperations implements Operations<BigInteger> {
     }
 
     @Override
-    public BigInteger negate(BigInteger value) throws OverflowException {
+    public BigInteger negate(BigInteger value) {
         return value.negate();
     }
 }

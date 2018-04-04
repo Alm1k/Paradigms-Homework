@@ -24,7 +24,7 @@ public class Variable<T> implements TripleExpression<T> {
         }
     }
 
-    public static class WrongVariableNameException extends EvaluateException {
+    static class WrongVariableNameException extends EvaluateException {
         WrongVariableNameException(String name) {
             super("Wrong variable name", name);
         }
