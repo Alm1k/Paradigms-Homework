@@ -28,6 +28,9 @@ public class BigIntegerOperations implements Operations<BigInteger> {
 
     @Override
     public BigInteger divide(BigInteger first, BigInteger second) throws IllegalOperationException {
+        if (second.equals(BigInteger.ZERO)) {
+            throw new IllegalOperationException("Divide by zero", String.format("%s / %s", first.toString(), second.toString()));
+        }
         return first.divide(second);
     }
 
