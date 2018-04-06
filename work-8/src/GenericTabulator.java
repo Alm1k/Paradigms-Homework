@@ -1,9 +1,6 @@
 import expressions.EvaluateException;
 import expressions.TripleExpression;
-import operations.BigIntegerOperations;
-import operations.DoubleOperations;
-import operations.IntegerOperations;
-import operations.Operations;
+import operations.*;
 import parser.ExpressionParser;
 import parser.exceptions.ParseException;
 
@@ -14,9 +11,12 @@ public class GenericTabulator implements Tabulator {
     private static final Map<String, Operations<?>> operationsMap = new HashMap<>();
 
     static {
-        operationsMap.put("i", new IntegerOperations());
+        operationsMap.put("i", new IntegerOperations(true));
         operationsMap.put("d", new DoubleOperations());
         operationsMap.put("bi", new BigIntegerOperations());
+        operationsMap.put("u", new IntegerOperations(false));
+        operationsMap.put("l", new LongOperations());
+        operationsMap.put("s", new ShortOperations());
     }
 
     @Override

@@ -48,14 +48,6 @@ public class Tokenizer {
         return expression.substring(begin, end);
     }
 
-    public int getNumber() throws IllegalConstantException {
-        try {
-            return Integer.parseInt(getContent());
-        } catch (NumberFormatException e) {
-            throw new IllegalConstantException(getContent(), getExpression(), begin);
-        }
-    }
-
     private void skipWhiteSpace() {
         while (begin < expression.length() && Character.isWhitespace(expression.charAt(begin))) {
             ++begin;
