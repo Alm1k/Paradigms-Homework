@@ -4,32 +4,33 @@ import operations.*;
 import parser.ExpressionParser;
 import parser.exceptions.ParseException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GenericTabulator implements Tabulator {
-    private static final Map<String, Operations<?>> operationsMap = new HashMap<>();
-
-    static {
-        operationsMap.put("i", new IntegerOperations(true));
-        operationsMap.put("d", new DoubleOperations());
-        operationsMap.put("bi", new BigIntegerOperations());
-        operationsMap.put("u", new IntegerOperations(false));
-        operationsMap.put("l", new LongOperations());
-        operationsMap.put("s", new ShortOperations());
-    }
-
     @Override
     public Object[][][] tabulate(String mode, String expression, int x1, int x2, int y1, int y2, int z1, int z2) throws UnknownModeException {
-        return getTable(getOperations(mode), expression, x1, x2, y1, y2, z1, z2);
-    }
-
-    private Operations<?> getOperations(String mode) throws UnknownModeException {
-        Operations<?> result = operationsMap.get(mode);
-        if (result == null) {
-            throw new UnknownModeException(mode);
+        Operations<?> operations;
+        switch (mode) {
+            case "i":
+                operations = new IntegerOperations(true);
+                break;
+            case "d":
+                operations = new DoubleOperations();
+                break;
+            case "bi":
+                operations = new BigIntegerOperations();
+                break;
+            case "u":
+                operations = new IntegerOperations(false);
+                break;
+            case "l":
+                operations = new LongOperations();
+                break;
+            case "s":
+                operations = new ShortOperations();
+                break;
+            default:
+                throw new UnknownModeException(mode);
         }
-        return result;
+        return getTable(operations, expression, x1, x2, y1, y2, z1, z2);
     }
 
     private <T> Object[][][] getTable(Operations<T> operations, String expression, int x1, int x2, int y1, int y2, int z1, int z2) {
@@ -38,7 +39,7 @@ public class GenericTabulator implements Tabulator {
         TripleExpression<T> parsedExpression;
         try {
             parsedExpression = parser.parse(expression);
-        }  catch (ParseException exception) {
+        } catch (ParseException exception) {
             return res;
         }
         for (int x = x1; x <= x2; ++x) {
