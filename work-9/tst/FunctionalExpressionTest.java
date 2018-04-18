@@ -1,6 +1,9 @@
-package jstest;
-
 import expression.BaseTest;
+import jstest.AbstractTests;
+import jstest.BaseJavascriptTest;
+import jstest.Engine;
+import jstest.JSEngine;
+import jstest.Language;
 
 import java.util.function.BiFunction;
 

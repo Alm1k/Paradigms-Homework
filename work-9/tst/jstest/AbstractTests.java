@@ -2,8 +2,8 @@ package jstest;
 
 import jstest.BaseJavascriptTest.Dialect;
 import jstest.BaseJavascriptTest.Expr;
-import jstest.BaseJavascriptTest.TExpr;
 import jstest.BaseJavascriptTest.Operator;
+import jstest.BaseJavascriptTest.TExpr;
 
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;

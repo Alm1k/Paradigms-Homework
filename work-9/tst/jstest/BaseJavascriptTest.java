@@ -2,8 +2,12 @@ package jstest;
 
 import expression.BaseTest;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * @author Niyaz Nigmatullin

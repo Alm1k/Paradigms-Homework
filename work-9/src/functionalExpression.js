@@ -29,15 +29,15 @@ var add = binary(
     }
 );
 
-var substract = binary(
+var subtract = binary(
     function (left, right) {
-        return left + right;
+        return left - right;
     }
 );
 
-var multuply = binary(
+var multiply = binary(
     function (left, right) {
-        return left + right;
+        return left * right;
     }
 );
 
@@ -46,11 +46,3 @@ var divide = binary(
         return left / right;
     }
 );
-
-// code here
-var expr = multiply(
-    cnst(2),
-    variable("x")
-);
-
-document.write(expr(5));
